@@ -1,9 +1,9 @@
-import { playlistMatrix, alienColorsMatrix } from "./aliens.js"
+import { preloadImages, images } from "./preload.js"
+import { playlistMatrix, alienColorsMatrix } from "./playlist.js"
 
 const omnitrix = document.querySelector("#omnitrix")
 const omnitrixBtn = document.querySelector("#omnitrix .green-btn")
 const omnitrixDisplay = document.querySelector("#omnitrix .frame")
-const lights = document.querySelector("#omnitrix .lights")
 const root = document.querySelector(":root")
 
 // Text Elements
@@ -18,7 +18,7 @@ let omnitrixTimeoutId = 0
 omnitrixBtn.addEventListener("click", () => {
     if (omnitrixDisplay.classList.contains("active")) {
         toggleOmnitrixDisplay()
-        // playAudio("../sounds/beep.mp3")
+        playAudio("../sounds/noise.ogg")
     }
     if (!omnitrixDisplay.classList.contains("up")) {
         hideAlienName()
@@ -32,7 +32,7 @@ omnitrixBtn.addEventListener("contextmenu", (e) => {
     if (omnitrixDisplay.classList.contains("up")) showAlienName()
     showPlaylist()
 
-    // playAudio("../sounds/beep.mp3")
+    playAudio("../sounds/noise.ogg")
 })
 
 omnitrixDisplay.addEventListener("click", () => {
@@ -52,7 +52,9 @@ omnitrixDisplay.addEventListener("click", () => {
             // Reactivate
             playAudio("./sounds/initiate.ogg")
             omnitrixDisplay.classList.remove("inactive")
+            omnitrixBtn.classList.remove("inactive")
             omnitrixDisplay.classList.add("active")
+            transformOmnitrix()
         }
     }
 })
@@ -78,12 +80,17 @@ const isOmnitrixDisplayUp = () => {
 }
 
 const toggleOmnitrixDisplay = () => {
-    if (!omnitrixDisplay.classList.contains("up")) {
+    if (omnitrixDisplay.classList.contains("up")) {
+        omnitrixDisplay.style.transform = "scale(1)"
+        omnitrixDefaultStateAnimation()
+    } else {
         omnitrixDisplay.style.transform = "scale(1.1)"
         playAudio("./sounds/alien_choose_initiate.ogg")
         showAlienName()
-    } else {
-        omnitrixDisplay.style.transform = "scale(1)"
+
+        setTimeout(() => {
+            omnitrixActivateAnimation()
+        }, 800)
     }
     omnitrixDisplay.classList.toggle("up")
 }
@@ -92,7 +99,7 @@ const setOmnitrixTimeout = () => {
     omnitrixTimeoutId = setTimeout(() => {
         omnitrixDetransform()
     }, 60000)
-} 
+}
 
 const omnitrixDetransform = () => {
     playAudio("./sounds/end.ogg")
@@ -132,23 +139,58 @@ const omnitrixTimeOut = () => {
     setTimeout(() => {
         isTimingOut = false
         omnitrixDisplay.classList.add("inactive")
+        omnitrixBtn.classList.add("inactive")
         omnitrixDisplay.classList.remove("processing")
         transformOmnitrix()
     }, 3000)
 }
 
 const transformOmnitrix = () => {
-    if (!omnitrixDisplay.classList.contains("inactive")) {
+    if (omnitrixDisplay.classList.contains("inactive")) {
+        root.style.setProperty("--og-frame", 'url("../images/new-frame-red.png")')
+        root.style.setProperty("--base", 'url("../images/base.png")')
+        omnitrixBtn.style.display = "block"
+        changeBackColor(false)
+    } else if (omnitrixDisplay.classList.contains("active")) {
+        root.style.setProperty("--og-frame", 'url("../images/new-frame.png")')
+    } else {
         root.style.setProperty("--og-frame", 'url("../images/frame.png")')
         root.style.setProperty("--base", "none")
         omnitrixBtn.style.display = "none"
         changeBackColor(true)
-    } else {
-        root.style.setProperty("--og-frame", 'url("../images/new-frame.png")')
-        root.style.setProperty("--base", 'url("../images/base.png")')
-        omnitrixBtn.style.display = "block"
-        changeBackColor(false)
     }
+}
+
+const omnitrixActivateAnimation = () => {
+    const light = document.querySelector("#omnitrix .lights")
+    const frames = document.querySelectorAll("#omnitrix .inner-frames .inner-frame")
+    const thisFrame = document.querySelector("#omnitrix .inner-frames")
+
+    const parameters = "1s forwards ease-in"
+
+    light.style.animation = "lightSizeUp " + parameters
+    frames[0].style.animation = "joinSideLeft " + parameters
+    frames[1].style.animation = "joinSideLeft " + parameters
+    frames[2].style.animation = "joinSideRight " + parameters
+
+    setTimeout(() => {
+        light.style.display = "none"
+        frames.forEach((frame) => (frame.style.display = "none"))
+        thisFrame.style.backgroundImage = `url("${images[0].src}")` //'url("../images/alien-display-frame.png")'
+    }, 1000)
+}
+
+const omnitrixDefaultStateAnimation = () => {
+    const light = document.querySelector("#omnitrix .lights")
+    const frames = document.querySelectorAll("#omnitrix .inner-frames .inner-frame")
+    const thisFrame = document.querySelector("#omnitrix .inner-frames")
+
+    light.style.animation = "none"
+    frames.forEach((frame) => (frame.style.animation = "none"))
+
+    light.style.display = "block"
+    frames.forEach((frame) => (frame.style.display = "block"))
+    thisFrame.style.backgroundImage = ""
 }
 
 const changeBackColor = (isTransforming = true) => {
@@ -229,3 +271,6 @@ const getAlienID = () => {
 
 let currentPlaylist = getPlaylist()
 let currentAlienId = getAlienID()
+
+// Call the preloadImages function
+preloadImages()

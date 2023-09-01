@@ -5,6 +5,7 @@
 
 :root {
     --green: #88ff00;
+    --red: #ff0000;
     --dark-grey: #262626;
     --light-grey: #3b3b3b;
     --og-frame: url("../images/new-frame.png");
@@ -85,11 +86,11 @@ body {
 }
 
 #omnitrix .frame.active:after {
-    background-color: rgb(136, 255, 0);
+    background-color: var(--green);
 }
 
 #omnitrix .frame.inactive:after {
-    background-color: rgb(255, 0, 0);
+    background-color: var(--red);
 }
 
 /* Display */
@@ -101,6 +102,8 @@ body {
     left: 4%;
     top: 4%;
     border-radius: 50%;
+    z-index: 1;
+    background-size: cover;
     overflow: hidden;
 }
 
@@ -113,25 +116,27 @@ body {
     box-sizing: border-box;
 
     z-index: 100;
-    /* border: 8px solid black;
-  background-color: rgb(54, 54, 54); */
     background-size: cover;
     background-position: 0;
     border-radius: 10px;
-
-    /* transform: rotate(45deg); */
 }
 
 #omnitrix .inner-frames .inner-frame:nth-child(1) {
     background-image: url("../images/sides_test.png");
     left: -55%;
-/*     animation: joinSideLeft 2s infinite ease-in; */
+    z-index: 1;
 }
 
 #omnitrix .inner-frames .inner-frame:nth-child(2) {
+    background-image: url("../images/left-side.png");
+    left: -55%;
+    z-index: 1000;
+}
+
+#omnitrix .inner-frames .inner-frame:nth-child(3) {
     background-image: url("../images/right_side.png");
     right: -55%;
-/*     animation: joinSideRight 2s infinite ease-in; */
+    z-index: 10;
 }
 
 /* Green Button */
@@ -149,15 +154,31 @@ body {
     background-color: var(--green);
 }
 
+#omnitrix .green-btn.inactive {
+    background-color: var(--red);
+}
+
 /* Lights */
+
+#omnitrix .center-lights {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 #omnitrix .lights {
     position: absolute;
-    width: 0;
-    height: 0;
-    background-color: rgb(9, 255, 0);
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/light.png");
+    background-size: contain;
     border-radius: 50%;
-    z-index: 1000000000;
+    background-position: center;
+    z-index: 100;
 }
 
 /* Animations */
@@ -204,13 +225,33 @@ body {
 
 @keyframes joinSideLeft {
     100% {
-        left: -10%;
+        left: -15%;
     }
 }
 
 @keyframes joinSideRight {
     100% {
-        right: -10%;
+        right: -15%;
+    }
+}
+
+@keyframes lightSizeUp {
+    0% {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    35% {
+        opacity: 1;
+        width: 0;
+        height: 0;
+    }
+
+    100% {
+        opacity: 1;
+        width: 100%;
+        height: 100%;
     }
 }
 
