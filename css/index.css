@@ -7,25 +7,32 @@
     --green: #88ff00;
     --dark-grey: #262626;
     --light-grey: #3b3b3b;
+    --og-frame: url("../images/new-frame.png");
+    --base: url("../images/base.png");
+    --background-color: blueviolet;
 }
 
 body {
     position: relative;
-    width: 100%;
+    max-width: 100%;
     height: 100vh;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background-color: blueviolet;
+    background-color: var(--background-color);
 }
 
 #omnitrix {
     position: relative;
-    width: 400px;
+    /* width: 400px; */
+    width: 480px;
     height: 480px;
-    background-color: var(--dark-grey);
+    /* background-color: var(--dark-grey); */
+
+    background-image: var(--base);
+    background-size: cover;
 
     display: flex;
     align-items: center;
@@ -40,7 +47,7 @@ body {
     position: relative;
     width: 290px;
     height: 290px;
-    background-color: var(--light-grey);
+    /* background-color: var(--light-grey); */
 
     display: flex;
     align-items: center;
@@ -56,7 +63,6 @@ body {
     box-sizing: border-box;
 
     z-index: 10000;
-    /* border: 25px solid #949494; */
     border-radius: 50%;
 
     overflow: hidden;
@@ -69,16 +75,16 @@ body {
     width: 100%;
     height: 100%;
     z-index: 10000;
-    background-image: url("../images/new-frame.png");
+    background-image: var(--og-frame);
     background-size: contain;
 }
 
 #omnitrix .mid-portion .frame.rotate-right:before {
-    animation: rotateRight 1s ease;
+    animation: rotateRight 500ms ease;
 }
 
 #omnitrix .mid-portion .frame.rotate-left:before {
-    animation: rotateLeft 1s ease;
+    animation: rotateLeft 500ms ease;
 }
 
 #omnitrix .mid-portion .frame:after {
@@ -185,14 +191,15 @@ body {
 
 #omnitrix .green-btn {
     position: absolute;
-    width: 50px;
-    height: 50px;
-    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    bottom: 25px;
     left: 50%;
 
     transform: translateX(-50%);
     border-radius: 50%;
-    border: 6px solid rgb(114, 114, 114);
+    /* border: 6px solid rgb(114, 114, 114); */
+    box-shadow: 0px -5px 0px 5px rgb(114, 114, 114);
     background-color: var(--green);
     /* background-image: radial-gradient(rgb(144, 231, 31), rgb(94, 235, 13)); */
 }
@@ -292,10 +299,48 @@ body {
 
 #alienName {
     position: absolute;
-    top: 10%;
+    top: 20px;
     margin-inline: auto;
     text-transform: uppercase;
     color: white;
+    -webkit-text-stroke-width: 3px;
+    -webkit-text-stroke-color: black;
     font-size: 3rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#playlist {
+    position: absolute;
+    bottom: 20px;
+    margin-inline: auto;
+    text-transform: uppercase;
+    color: white;
+    -webkit-text-stroke-width: 3px;
+    -webkit-text-stroke-color: black;
+    font-size: 2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+@media screen and (max-width: 500px) {
+    #omnitrix {
+        height: 300px;
+        width: 300px;
+    }
+
+    #omnitrix .mid-portion .frame {
+        height: 170px;
+        width: 170px;
+    }
+
+    #omnitrix .inner-frames .inner-frame {
+        width: 130px;
+    }
+
+    #omnitrix .inner-frames .inner-frame:nth-child(1) {
+        left: -45%;
+    }
+
+    #omnitrix .inner-frames .inner-frame:nth-child(2) {
+        right: -45%;
+    }
 }
