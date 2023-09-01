@@ -2,7 +2,7 @@ import { playlistMatrix, alienColorsMatrix } from "./aliens.js"
 
 const omnitrix = document.querySelector("#omnitrix")
 const omnitrixBtn = document.querySelector("#omnitrix .green-btn")
-const omnitrixDisplay = document.querySelector("#omnitrix .mid-portion .frame")
+const omnitrixDisplay = document.querySelector("#omnitrix .frame")
 const lights = document.querySelector("#omnitrix .lights")
 const root = document.querySelector(":root")
 
@@ -11,13 +11,14 @@ const alienName = document.querySelector("#alienName")
 const playlist = document.querySelector("#playlist")
 
 // JS Variables
-let timeout = 0
+let playlistTimeout = 0
+let omnitrixTimeoutId = 0
 
 // Event Listeners
 omnitrixBtn.addEventListener("click", () => {
     if (omnitrixDisplay.classList.contains("active")) {
         toggleOmnitrixDisplay()
-        playAudio("../sounds/beep.ogg")
+        // playAudio("../sounds/beep.mp3")
     }
     if (!omnitrixDisplay.classList.contains("up")) {
         hideAlienName()
@@ -31,7 +32,7 @@ omnitrixBtn.addEventListener("contextmenu", (e) => {
     if (omnitrixDisplay.classList.contains("up")) showAlienName()
     showPlaylist()
 
-    playAudio("../sounds/beep.ogg")
+    // playAudio("../sounds/beep.mp3")
 })
 
 omnitrixDisplay.addEventListener("click", () => {
@@ -39,15 +40,14 @@ omnitrixDisplay.addEventListener("click", () => {
         if (isOmnitrixDisplayUp()) {
             // Transform
             toggleOmnitrixDisplay()
+            setOmnitrixTimeout()
             playAudio("./sounds/transformation_1.ogg")
             omnitrixDisplay.classList.remove("active")
 
             transformOmnitrix()
         } else if (!omnitrixDisplay.classList.contains("active") && !omnitrixDisplay.classList.contains("inactive")) {
             // Detransform and deactivate
-            playAudio("./sounds/end.ogg")
-            omnitrixTimeOut()
-            hideAlienName()
+            omnitrixDetransform()
         } else if (omnitrixDisplay.classList.contains("inactive")) {
             // Reactivate
             playAudio("./sounds/initiate.ogg")
@@ -86,6 +86,19 @@ const toggleOmnitrixDisplay = () => {
         omnitrixDisplay.style.transform = "scale(1)"
     }
     omnitrixDisplay.classList.toggle("up")
+}
+
+const setOmnitrixTimeout = () => {
+    omnitrixTimeoutId = setTimeout(() => {
+        omnitrixDetransform()
+    }, 60000)
+} 
+
+const omnitrixDetransform = () => {
+    playAudio("./sounds/end.ogg")
+    clearTimeout(omnitrixTimeoutId)
+    omnitrixTimeOut()
+    hideAlienName()
 }
 
 const turnOmnitrix = (direction) => {
@@ -182,9 +195,9 @@ const changeAlien = (direction) => {
 const showPlaylist = () => {
     playlist.innerText = "Playlist " + (currentPlaylist + 1)
 
-    clearTimeout(timeout)
+    clearTimeout(playlistTimeout)
 
-    timeout = setTimeout(() => {
+    playlistTimeout = setTimeout(() => {
         playlist.innerText = ""
     }, 2000)
 }
