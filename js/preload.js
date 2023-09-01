@@ -1,5 +1,5 @@
 // Define an array of image paths to preload
-const imagePaths = ["../images/alien-display-frame.png"]
+const imagePaths = ["images/alien-display-frame.png"]
 export const images = []
 
 const audioPaths = ["alien_choose_initiate.ogg", "end.ogg", "initiate.ogg", "left_turn.ogg", "right_turn.ogg", "transformation_1.ogg"]
