@@ -1,9 +1,10 @@
 import { playAudio, randomTurnAudio } from "./audio.js"
 import { changeBackColor, hideAlienName, showAlienName, showPlaylist } from "./interface.js"
-import { changeAlien, changePlaylist } from "./index.js"
+import { changeAlien, changePlaylist, currentAlienId } from "./index.js"
 
 export const omnitrixDisplay = document.querySelector("#omnitrix .frame")
 export const omnitrixBtn = document.querySelector("#omnitrix .green-btn")
+const alienSilhouette = document.querySelector(".alien-silhouette")
 export const root = document.querySelector(":root")
 
 let omnitrixTimeoutId = 0
@@ -23,7 +24,10 @@ export const auxiliaryHold = (e) => {
     e.preventDefault()
 
     changePlaylist()
-    if (omnitrixDisplay.classList.contains("up")) showAlienName()
+    if (omnitrixDisplay.classList.contains("up")) {
+        showAlienName()
+        showAlienImage()
+    }
     showPlaylist()
 
     playAudio("../sounds/noise.ogg")
@@ -55,6 +59,7 @@ export const displayHold = (e) => {
     }
 }
 
+// Display Manipulation
 export const isOmnitrixDisplayUp = () => {
     if (omnitrixDisplay.classList.contains("up")) {
         return true
@@ -73,15 +78,10 @@ export const toggleOmnitrixDisplay = () => {
 
         setTimeout(() => {
             omnitrixChangeDisplayState()
+            showAlienImage()
         }, 800)
     }
     omnitrixDisplay.classList.toggle("up")
-}
-
-export const setOmnitrixTimeout = () => {
-    omnitrixTimeoutId = setTimeout(() => {
-        omnitrixDetransform()
-    }, 60000)
 }
 
 // Display Click Omnitrix States
@@ -109,18 +109,11 @@ export const omnitrixReactivate = () => {
     transformOmnitrix()
 }
 
-export const turnOmnitrix = (direction) => {
-    randomTurnAudio()
-    let rotation = direction == "right" ? "rotate-right" : "rotate-left"
-
-    changeAlien(direction)
-
-    showAlienName()
-
-    omnitrixDisplay.classList.add(rotation)
-    setTimeout(() => {
-        omnitrixDisplay.classList.remove(rotation)
-    }, 500)
+// Timeout Logic
+export const setOmnitrixTimeout = () => {
+    omnitrixTimeoutId = setTimeout(() => {
+        omnitrixDetransform()
+    }, 60000)
 }
 
 export const omnitrixTimeOut = () => {
@@ -145,6 +138,22 @@ export const omnitrixTimeOut = () => {
     }, 3000)
 }
 
+// Animations
+export const turnOmnitrix = (direction) => {
+    randomTurnAudio()
+    let rotation = direction == "right" ? "rotate-right" : "rotate-left"
+
+    changeAlien(direction)
+
+    showAlienName()
+    showAlienImage()
+
+    omnitrixDisplay.classList.add(rotation)
+    setTimeout(() => {
+        omnitrixDisplay.classList.remove(rotation)
+    }, 500)
+}
+
 export const transformOmnitrix = () => {
     if (omnitrixDisplay.classList.contains("inactive")) {
         root.style.setProperty("--og-frame", 'url("../images/new-frame-red.png")')
@@ -164,4 +173,9 @@ export const transformOmnitrix = () => {
 export const omnitrixChangeDisplayState = (waitingForInput = true) => {
     const innerFrame = document.querySelector("#omnitrix .inner-frames")
     innerFrame.style.backgroundImage = `url("../images/frames${waitingForInput == true ? "-selection" : ""}.png")`
+}
+
+//Alien Test
+const showAlienImage = () => {
+    alienSilhouette.style.backgroundImage = `url("../images/aliens/${parseInt(currentAlienId) + 1}.png")`
 }
