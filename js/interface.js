@@ -1,8 +1,8 @@
-import { currentAlienId, currentPlaylist } from "./index.js"
+import { currentAlienId, currentPlaylist, isMasterControl } from "./index.js"
 import { root } from "./omnitrix.js"
 import { alienColorsMatrix, playlistMatrix } from "./playlist.js"
 
-let playlistTimeout = 0
+let auxiliaryTextTimeout = 0
 
 // Text Elements
 const alienName = document.querySelector("#alienName")
@@ -12,12 +12,20 @@ export const changeBackColor = (isTransforming = true) => {
     root.style.setProperty("--background-color", isTransforming == true ? alienColorsMatrix[currentPlaylist][currentAlienId] : "blueviolet")
 }
 
-export const showPlaylist = () => {
-    playlist.innerText = "Playlist " + (currentPlaylist + 1)
+export const showAuxiliaryText = (textType) => {
+    if (textType == "playlist") {
+        playlist.innerText = "Playlist " + (currentPlaylist + 1)
+    } else if (textType == "masterControl") {
+        playlist.innerText = `Master Control ${isMasterControl ? "ON" : "OFF"}`
+    } else if (textType == "selfDestruct") {
+        playlist.innerText = `Self-Destruct Set to 1 Minute`
+    } else if ((textType = "removeSelfDestruct")) {
+        playlist.innerText = `Self-Destruct Cancelled`
+    }
 
-    clearTimeout(playlistTimeout)
+    clearTimeout(auxiliaryTextTimeout)
 
-    playlistTimeout = setTimeout(() => {
+    auxiliaryTextTimeout = setTimeout(() => {
         playlist.innerText = ""
     }, 2000)
 }

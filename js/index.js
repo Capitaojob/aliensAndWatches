@@ -1,5 +1,6 @@
 import { showAlienName } from "./interface.js"
 import { auxiliaryClick, auxiliaryHold, displayClick, displayHold, omnitrixBtn, omnitrixDisplay } from "./omnitrix.js"
+import { handleTouchMove, handleTouchStart } from "./phone-handler.js"
 import { playlistMatrix } from "./playlist.js"
 
 // Event listeners and main application logic
@@ -51,8 +52,13 @@ export const storeAlienAndPlaylistInLocalStorage = () => {
     localStorage.setItem("playlist", currentPlaylist)
 }
 
-// Gets
+export const storeMasterControlInLocalStorage = () => {
+    isMasterControl = !isMasterControl
 
+    localStorage.setItem("masterControl", isMasterControl)
+}
+
+// Gets
 const getPlaylist = () => {
     const playlist = localStorage.getItem("playlist")
     return playlist !== null ? playlist : 0
@@ -63,5 +69,11 @@ const getAlienID = () => {
     return alienID !== null ? alienID : 0
 }
 
+const getMasterControl = () => {
+    const storedMasterControl = localStorage.getItem("masterControl")
+    return storedMasterControl !== null ? storedMasterControl : false
+}
+
 export let currentPlaylist = getPlaylist()
 export let currentAlienId = getAlienID()
+export let isMasterControl = getMasterControl()

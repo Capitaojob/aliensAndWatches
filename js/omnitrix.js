@@ -1,6 +1,6 @@
 import { playAudio, randomTurnAudio } from "./audio.js"
-import { changeBackColor, hideAlienName, showAlienName, showPlaylist } from "./interface.js"
-import { changeAlien, changePlaylist, currentAlienId } from "./index.js"
+import { changeBackColor, hideAlienName, showAlienName, showAuxiliaryText } from "./interface.js"
+import { changeAlien, changePlaylist, currentAlienId, currentPlaylist, isMasterControl, storeMasterControlInLocalStorage } from "./index.js"
 
 export const omnitrixDisplay = document.querySelector("#omnitrix .frame")
 export const omnitrixBtn = document.querySelector("#omnitrix .green-btn")
@@ -8,6 +8,8 @@ const alienSilhouette = document.querySelector(".alien-silhouette")
 export const root = document.querySelector(":root")
 
 let omnitrixTimeoutId = 0
+let selfDestructId = 0
+let currentSequence = ""
 
 // Event Handlers
 export const auxiliaryClick = () => {
@@ -17,6 +19,8 @@ export const auxiliaryClick = () => {
     }
     if (!omnitrixDisplay.classList.contains("up")) {
         hideAlienName()
+        hideAlienImage()
+        resetSequence()
     }
 }
 
@@ -28,7 +32,7 @@ export const auxiliaryHold = (e) => {
         showAlienName()
         showAlienImage()
     }
-    showPlaylist()
+    showAuxiliaryText("playlist")
 
     playAudio("../sounds/noise.ogg")
 }
@@ -55,19 +59,25 @@ export const displayHold = (e) => {
         !(omnitrixDisplay.classList.contains("rotate-right") || omnitrixDisplay.classList.contains("rotate-left"))
     ) {
         let isRight = e.clientX >= window.innerWidth / 2
-        isRight ? turnOmnitrix("right") : turnOmnitrix("left")
+        if (isRight) {
+            turnOmnitrix("right")
+            // updateCurrentSequence("right")
+        } else {
+            turnOmnitrix("left")
+            // updateCurrentSequence("left")
+        }
     }
 }
 
 // Display Manipulation
-export const isOmnitrixDisplayUp = () => {
+const isOmnitrixDisplayUp = () => {
     if (omnitrixDisplay.classList.contains("up")) {
         return true
     }
     return false
 }
 
-export const toggleOmnitrixDisplay = () => {
+const toggleOmnitrixDisplay = () => {
     if (omnitrixDisplay.classList.contains("up")) {
         omnitrixDisplay.style.transform = "scale(1)"
         omnitrixChangeDisplayState(false)
@@ -85,24 +95,24 @@ export const toggleOmnitrixDisplay = () => {
 }
 
 // Display Click Omnitrix States
-export const omnitrixDetransform = () => {
-    playAudio("./sounds/end.ogg")
-    clearTimeout(omnitrixTimeoutId)
+const omnitrixDetransform = () => {
+    if (!isMasterControl) clearTimeout(omnitrixTimeoutId)
     omnitrixTimeOut()
     hideAlienName()
 }
 
-export const omnitrixTransform = () => {
+const omnitrixTransform = () => {
     toggleOmnitrixDisplay()
-    setOmnitrixTimeout()
+    if (!isMasterControl) setOmnitrixTimeout()
     hideAlienImage()
+    updateCurrentSequence("clear")
     playAudio("./sounds/transformation_1.ogg")
     omnitrixDisplay.classList.remove("active")
 
     transformOmnitrix()
 }
 
-export const omnitrixReactivate = () => {
+const omnitrixReactivate = () => {
     playAudio("./sounds/initiate.ogg")
     omnitrixDisplay.classList.remove("inactive")
     omnitrixBtn.classList.remove("inactive")
@@ -111,32 +121,53 @@ export const omnitrixReactivate = () => {
 }
 
 // Timeout Logic
-export const setOmnitrixTimeout = () => {
+const setOmnitrixTimeout = () => {
     omnitrixTimeoutId = setTimeout(() => {
         omnitrixDetransform()
     }, 60000)
 }
 
-export const omnitrixTimeOut = () => {
+const setOrRemoveSelfDestructTimeout = () => {
+    if (selfDestructId != 0) {
+        clearTimeout(selfDestructId)
+        selfDestructId = 0
+    } else {
+        selfDestructId = setTimeout(() => {
+            document.body.innerHTML = ""
+        }, 60000)
+    }
+}
+
+const omnitrixTimeOut = () => {
     let isTimingOut = true
 
-    omnitrixDisplay.classList.toggle("inactive")
-    omnitrixDisplay.classList.add("processing")
+    if (!isMasterControl) {
+        playAudio("./sounds/end.ogg")
 
-    setInterval(() => {
-        if (!isTimingOut) {
-            return
-        }
         omnitrixDisplay.classList.toggle("inactive")
-    }, 500)
+        omnitrixDisplay.classList.add("processing")
 
-    setTimeout(() => {
-        isTimingOut = false
+        setInterval(() => {
+            if (!isTimingOut) {
+                return
+            }
+            omnitrixDisplay.classList.toggle("inactive")
+        }, 500)
+
+        setTimeout(() => {
+            isTimingOut = false
+            omnitrixDisplay.classList.add("inactive")
+            omnitrixBtn.classList.add("inactive")
+            omnitrixDisplay.classList.remove("processing")
+            transformOmnitrix()
+        }, 3000)
+    } else {
         omnitrixDisplay.classList.add("inactive")
         omnitrixBtn.classList.add("inactive")
         omnitrixDisplay.classList.remove("processing")
         transformOmnitrix()
-    }, 3000)
+        omnitrixReactivate()
+    }
 }
 
 // Animations
@@ -144,6 +175,7 @@ export const turnOmnitrix = (direction) => {
     randomTurnAudio()
     let rotation = direction == "right" ? "rotate-right" : "rotate-left"
 
+    updateCurrentSequence(direction)
     changeAlien(direction)
 
     showAlienName()
@@ -155,7 +187,7 @@ export const turnOmnitrix = (direction) => {
     }, 500)
 }
 
-export const transformOmnitrix = () => {
+const transformOmnitrix = () => {
     if (omnitrixDisplay.classList.contains("inactive")) {
         root.style.setProperty("--og-frame", 'url("../images/new-frame-red.png")')
         root.style.setProperty("--base", 'url("../images/base.png")')
@@ -171,14 +203,46 @@ export const transformOmnitrix = () => {
     }
 }
 
-export const omnitrixChangeDisplayState = (waitingForInput = true) => {
+const omnitrixChangeDisplayState = (waitingForInput = true) => {
     const innerFrame = document.querySelector("#omnitrix .inner-frames")
     innerFrame.style.backgroundImage = `url("../images/frames${waitingForInput == true ? "-selection" : ""}.png")`
 }
 
-//Alien Test
+// Omnitrix Sequence Commands
+const updateCurrentSequence = (action) => {
+    if (action == "right") {
+        currentSequence += "1"
+    } else if (action == "left") {
+        currentSequence += "0"
+    } else if (action == "clear") {
+        resetSequence()
+    }
+    checkSequence()
+}
+
+const checkSequence = () => {
+    if (currentSequence == "101001") {
+        //01001101110010
+        storeMasterControlInLocalStorage()
+        showAuxiliaryText("masterControl")
+    } else if (currentSequence == "00100100") {
+        showAuxiliaryText(selfDestructId != 0 ? "removeSelfDestruct" : "selfDestruct")
+        setOrRemoveSelfDestructTimeout()
+    } else {
+        return
+    }
+
+    resetSequence()
+}
+
+const resetSequence = () => {
+    currentSequence = ""
+}
+
+//Alien Change
 const showAlienImage = () => {
-    alienSilhouette.style.backgroundImage = `url("../images/aliens/${parseInt(currentAlienId) + 1}.png")`
+    let alienImageName = parseInt(currentAlienId) + 1 + currentPlaylist * 10
+    alienSilhouette.style.backgroundImage = alienImageName == 1 ? `url("../images/aliens/${alienImageName}.png")` : "none"
 }
 
 const hideAlienImage = () => {
