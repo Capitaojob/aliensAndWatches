@@ -1,4 +1,3 @@
-// Define an array of image paths to preload
 const imagePaths = ["images/alien-display-frame.png"]
 export const images = []
 
@@ -18,7 +17,7 @@ export function preloadImages() {
 }
 
 function preloadAudios() {
-    // Create a new Image object for each image path
+    // Create a new Audio object for each image path
     const totalAudios = audioPaths.length
     for (let i = 0; i < totalAudios; i++) {
         omnitrixAudios[i] = new Audio()

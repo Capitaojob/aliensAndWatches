@@ -4,7 +4,7 @@
 }
 
 :root {
-    --green: #88ff00;
+    --main: #88ff00;
     --red: #ff0000;
     --dark-grey: #262626;
     --light-grey: #3b3b3b;
@@ -40,8 +40,7 @@ body {
     border-radius: 10px;
 }
 
-/* Mid Section (Square + Display) */
-
+/* Mid Section */
 #omnitrix .frame {
     position: relative;
     width: 290px;
@@ -86,7 +85,7 @@ body {
 }
 
 #omnitrix .frame.active:after {
-    background-color: var(--green);
+    background-color: var(--main);
 }
 
 #omnitrix .frame.inactive:after {
@@ -94,53 +93,24 @@ body {
 }
 
 /* Display */
-
 #omnitrix .frame .inner-frames {
     position: absolute;
     width: 92%;
     height: 92%;
     left: 4%;
     top: 4%;
-    border-radius: 50%;
-    z-index: 1;
+
     background-size: cover;
+    background-image: url("../images/frames.png");
+
+    border-radius: 50%;
+    background-size: cover;
+
+    z-index: 1;
     overflow: hidden;
 }
 
-#omnitrix .inner-frames .inner-frame {
-    position: absolute;
-    width: 260px;
-    height: 80%;
-    top: 10%;
-
-    box-sizing: border-box;
-
-    z-index: 100;
-    background-size: cover;
-    background-position: 0;
-    border-radius: 10px;
-}
-
-#omnitrix .inner-frames .inner-frame:nth-child(1) {
-    background-image: url("../images/sides_test.png");
-    left: -55%;
-    z-index: 1;
-}
-
-#omnitrix .inner-frames .inner-frame:nth-child(2) {
-    background-image: url("../images/left-side.png");
-    left: -55%;
-    z-index: 1000;
-}
-
-#omnitrix .inner-frames .inner-frame:nth-child(3) {
-    background-image: url("../images/right_side.png");
-    right: -55%;
-    z-index: 10;
-}
-
 /* Green Button */
-
 #omnitrix .green-btn {
     position: absolute;
     width: 40px;
@@ -151,7 +121,7 @@ body {
     transform: translateX(-50%);
     border-radius: 50%;
     box-shadow: 0px -5px 0px 5px rgb(114, 114, 114);
-    background-color: var(--green);
+    background-color: var(--main);
 }
 
 #omnitrix .green-btn.inactive {
@@ -167,18 +137,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-#omnitrix .lights {
-    position: absolute;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("../images/light.png");
-    background-size: contain;
-    border-radius: 50%;
-    background-position: center;
-    z-index: 100;
 }
 
 /* Animations */
@@ -223,90 +181,29 @@ body {
     }
 }
 
-@keyframes joinSideLeft {
-    100% {
-        left: -15%;
-    }
-}
-
-@keyframes joinSideRight {
-    100% {
-        right: -15%;
-    }
-}
-
-@keyframes lightSizeUp {
-    0% {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-
-    35% {
-        opacity: 1;
-        width: 0;
-        height: 0;
-    }
-
-    100% {
-        opacity: 1;
-        width: 100%;
-        height: 100%;
-    }
-}
-
-@keyframes smashLight {
-    0% {
-        width: 0;
-        height: 0;
-        opacity: 0;
-    }
-
-    90% {
-        opacity: 100%;
-    }
-
-    99% {
-        width: 130vw;
-        height: 130vw;
-        opacity: 0;
-    }
-
-    100% {
-        width: 0;
-        height: 0;
-    }
-}
-
 /* General */
 .invisible {
     display: none !important;
 }
 
-#alienName {
+#alienName,
+#playlist {
     position: absolute;
-    top: 20px;
     margin-inline: auto;
     text-transform: uppercase;
     color: white;
     text-shadow: 1px 1px 4px black;
-    /*-webkit-text-stroke-width: 3px;
-    -webkit-text-stroke-color: black;*/
-    font-size: 3rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+#alienName {
+    font-size: 3rem;
+    top: 20px;
+}
+
 #playlist {
-    position: absolute;
-    bottom: 20px;
-    margin-inline: auto;
-    text-transform: uppercase;
-    color: white;
-    text-shadow: 1px 1px 4px black;
-    /*-webkit-text-stroke-width: 3px;
-    -webkit-text-stroke-color: black;*/
     font-size: 2rem;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    bottom: 20px;
 }
 
 @media screen and (max-width: 500px) {
@@ -315,20 +212,12 @@ body {
         width: 300px;
     }
 
-    #omnitrix .mid-portion .frame {
+    #omnitrix .frame {
         height: 170px;
         width: 170px;
     }
 
     #omnitrix .inner-frames .inner-frame {
         width: 130px;
-    }
-
-    #omnitrix .inner-frames .inner-frame:nth-child(1) {
-        left: -45%;
-    }
-
-    #omnitrix .inner-frames .inner-frame:nth-child(2) {
-        right: -45%;
     }
 }
