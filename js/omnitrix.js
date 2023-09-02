@@ -95,6 +95,7 @@ export const omnitrixDetransform = () => {
 export const omnitrixTransform = () => {
     toggleOmnitrixDisplay()
     setOmnitrixTimeout()
+    hideAlienImage()
     playAudio("./sounds/transformation_1.ogg")
     omnitrixDisplay.classList.remove("active")
 
@@ -178,4 +179,8 @@ export const omnitrixChangeDisplayState = (waitingForInput = true) => {
 //Alien Test
 const showAlienImage = () => {
     alienSilhouette.style.backgroundImage = `url("../images/aliens/${parseInt(currentAlienId) + 1}.png")`
+}
+
+const hideAlienImage = () => {
+    alienSilhouette.style.backgroundImage = "none"
 }
