@@ -9,8 +9,8 @@
     --red: #ff0000;
     --dark-grey: #262626;
     --light-grey: #3b3b3b;
-    --og-frame: url("../images/new-frame.png");
-    --base: url("../images/base.png");
+    --og-frame: url("../assets/images/new-frame.png");
+    --base: url("../assets/images/base.png");
     --background-color: blueviolet;
 }
 
@@ -64,7 +64,7 @@ aside .menu {
     position: absolute;
     width: 100%;
     height: 100%;
-    
+
     top: -100vh;
     left: 0;
 
@@ -174,7 +174,7 @@ aside .menu li:hover {
     top: 4%;
 
     background-size: cover;
-    background-image: url("../images/frames.png");
+    background-image: url("../assets/images/frames.png");
 
     border-radius: 50%;
     background-size: cover;

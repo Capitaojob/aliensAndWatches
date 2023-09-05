@@ -4,6 +4,6 @@ export const playAudio = (audioFile) => {
 }
 
 export const randomTurnAudio = () => {
-    let audio = new Audio(Math.random() > 0.5 ? "./sounds/left_turn.ogg" : "./sounds/right_turn.ogg")
+    let audio = new Audio(Math.random() > 0.5 ? "./assets/sounds/left_turn.ogg" : "./assets/sounds/right_turn.ogg")
     audio.play()
 }

@@ -15,7 +15,7 @@ let currentSequence = ""
 export const auxiliaryClick = () => {
     if (omnitrixDisplay.classList.contains("active")) {
         toggleOmnitrixDisplay()
-        playAudio("../sounds/noise.ogg")
+        playAudio("../assets/sounds/noise.ogg")
     }
     if (!omnitrixDisplay.classList.contains("up")) {
         hideAlienName()
@@ -34,7 +34,7 @@ export const auxiliaryHold = (e) => {
     }
     showAuxiliaryText("playlist")
 
-    playAudio("../sounds/noise.ogg")
+    playAudio("../assets/sounds/noise.ogg")
 }
 
 export const displayClick = () => {
@@ -83,7 +83,7 @@ const toggleOmnitrixDisplay = () => {
         omnitrixChangeDisplayState(false)
     } else {
         omnitrixDisplay.style.transform = "scale(1.1)"
-        playAudio("./sounds/alien_choose_initiate.ogg")
+        playAudio("../assets/sounds/alien_choose_initiate.ogg")
         showAlienName()
 
         setTimeout(() => {
@@ -106,14 +106,14 @@ const omnitrixTransform = () => {
     if (!isMasterControl) setOmnitrixTimeout()
     hideAlienImage()
     updateCurrentSequence("clear")
-    playAudio("./sounds/transformation_1.ogg")
+    playAudio("../assets/sounds/transformation_1.ogg")
     omnitrixDisplay.classList.remove("active")
 
     transformOmnitrix()
 }
 
 const omnitrixReactivate = () => {
-    playAudio("./sounds/initiate.ogg")
+    playAudio("../assets/sounds/initiate.ogg")
     omnitrixDisplay.classList.remove("inactive")
     omnitrixBtn.classList.remove("inactive")
     omnitrixDisplay.classList.add("active")
@@ -142,7 +142,7 @@ const omnitrixTimeOut = () => {
     let isTimingOut = true
 
     if (!isMasterControl) {
-        playAudio("./sounds/end.ogg")
+        playAudio("../assets/sounds/end.ogg")
 
         omnitrixDisplay.classList.toggle("inactive")
         omnitrixDisplay.classList.add("processing")
@@ -189,14 +189,14 @@ export const turnOmnitrix = (direction) => {
 
 const transformOmnitrix = () => {
     if (omnitrixDisplay.classList.contains("inactive")) {
-        root.style.setProperty("--og-frame", 'url("../images/new-frame-red.png")')
-        root.style.setProperty("--base", 'url("../images/base.png")')
+        root.style.setProperty("--og-frame", 'url("../assets/images/new-frame-red.png")')
+        root.style.setProperty("--base", 'url("../assets/images/base.png")')
         omnitrixBtn.style.display = "block"
         changeBackColor(false)
     } else if (omnitrixDisplay.classList.contains("active")) {
-        root.style.setProperty("--og-frame", 'url("../images/new-frame.png")')
+        root.style.setProperty("--og-frame", 'url("../assets/images/new-frame.png")')
     } else {
-        root.style.setProperty("--og-frame", 'url("../images/frame.png")')
+        root.style.setProperty("--og-frame", 'url("../assets/images/frame.png")')
         root.style.setProperty("--base", "none")
         omnitrixBtn.style.display = "none"
         changeBackColor(true)
@@ -205,7 +205,7 @@ const transformOmnitrix = () => {
 
 const omnitrixChangeDisplayState = (waitingForInput = true) => {
     const innerFrame = document.querySelector("#omnitrix .inner-frames")
-    innerFrame.style.backgroundImage = `url("../images/frames${waitingForInput == true ? "-selection" : ""}.png")`
+    innerFrame.style.backgroundImage = `url("../assets/images/frames${waitingForInput == true ? "-selection" : ""}.png")`
 }
 
 // Omnitrix Sequence Commands
@@ -242,7 +242,7 @@ const resetSequence = () => {
 //Alien Change
 const showAlienImage = () => {
     let alienImageName = parseInt(currentAlienId) + 1 + currentPlaylist * 10
-    alienSilhouette.style.backgroundImage = alienImageName == 1 ? `url("../images/aliens/${alienImageName}.png")` : "none"
+    alienSilhouette.style.backgroundImage = alienImageName == 1 ? `url("../assets/images/aliens/${alienImageName}.png")` : "none"
 }
 
 const hideAlienImage = () => {

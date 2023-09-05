@@ -1,14 +1,62 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Explore the Planets</title>
-	<link rel="stylesheet" href="../css/planets.css" />
-	<script src="https://kit.fontawesome.com/d1e403b9d2.js" crossorigin="anonymous"></script>
-</head>
-<body>
-	<main>
-	</main>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="stylesheet" href="../css/planets.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+
+        <title>Explore the Planets</title>
+
+        <script src="https://kit.fontawesome.com/d1e403b9d2.js" crossorigin="anonymous"></script>
+        <script src="../js/planets.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <section class="loading"></section>
+            <div class="planet-card">
+                <div class="left">
+                    <img src="" alt="Current selected planet" />
+                    <h1 id="name">Planet</h1>
+                    <h3 id="description">Planet description</h3>
+                </div>
+                <div class="right">
+                    <i class="fa-solid fa-x"></i>
+                    <button id="travel">Travel to planet</button>
+                </div>
+            </div>
+            <section class="planets">
+                <div class="planet">
+                    <img src="../assets/videos/small-black-water.gif" data-name="Abyssia" alt="Small black water planet" />
+                </div>
+                <div class="planet">
+                    <img src="../assets/videos/gas-giant-blue-red.gif" data-name="Crimson Velvet" alt="Red and blue gas giant" />
+                </div>
+                <div class="planet">
+                    <img src="../assets/videos/green-and-purple.gif" data-name="Emerisynth" alt="Green and purple planet" />
+                </div>
+                <div class="planet">
+                    <img src="../assets/videos/red.gif" data-name="Xerithar" alt="Red planet" />
+                </div>
+                <div class="planet">
+                    <img src="../assets/videos/magma-big.gif" data-name="Flamara" alt="Big magma planet" />
+                </div>
+                <div class="planet">
+                    <img src="../assets/videos/white.gif" data-name="Serenovia" alt="White planet" />
+                </div>
+                <div class="planet">
+                    <img src="../assets/videos/purple-water.gif" data-name="Muskytar" alt="Purple watery planet" />
+                </div>
+                <div class="planet">
+                    <img src="../assets/videos/small-ice.gif" data-name="Cryos Minor" alt="Small ice planet" />
+                </div>
+            </section>
+            <div class="credits">
+                <a href="https://deep-fold.itch.io/pixel-planet-generator" target="_blank">Planet Generator Credits</a>
+            </div>
+        </main>
+    </body>
 </html>
