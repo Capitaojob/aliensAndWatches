@@ -3,6 +3,8 @@ import { auxiliaryClick, auxiliaryHold, displayClick, displayHold, omnitrixBtn, 
 import { handleTouchMove, handleTouchStart } from "./phone-handler.js"
 import { playlistMatrix } from "./playlist.js"
 
+const menuArrow = document.querySelector("aside i")
+
 // Event listeners and main application logic
 omnitrixBtn.addEventListener("click", () => {
     auxiliaryClick()
@@ -20,6 +22,18 @@ omnitrixDisplay.addEventListener("contextmenu", (e) => {
     displayHold(e)
 })
 
+menuArrow.addEventListener("click", () => {
+    menuArrow.classList.toggle("fa-chevron-down")
+    menuArrow.classList.toggle("fa-chevron-up")
+
+    if (menuArrow.classList.contains("fa-chevron-up")) {
+        document.querySelector("aside .menu").style.top = "0"
+    } else {
+        document.querySelector("aside .menu").style.top = "-100vh"
+    }
+})
+
+// Local Storage Variable Manipulations
 export const changePlaylist = () => {
     if (currentPlaylist < playlistMatrix.length - 1) {
         currentPlaylist++
