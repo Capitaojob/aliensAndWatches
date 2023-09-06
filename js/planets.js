@@ -8,12 +8,16 @@ planetCard.querySelector("i").addEventListener("click", () => {
 window.onload = () => {
     setTimeout(() => {
         document.querySelector(".loading").style.opacity = "0"
+        const isInvert = window.innerWidth < window.innerHeight ? true : false
+        console.log(isInvert)
 
         planets.forEach((planet) => {
             const planetSize = planet.getBoundingClientRect()
 
-            const left = Math.floor(Math.random() * (window.innerWidth - planetSize.width)) + "px"
-            const top = Math.floor(Math.random() * (window.innerHeight - planetSize.height)) + "px"
+            // const left = Math.floor(Math.random() * (window.innerWidth - planetSize.width)) + "px"
+            // const top = Math.floor(Math.random() * (window.innerHeight - planetSize.height)) + "px"
+            const left = Math.floor(Math.random() * (isInvert ? window.innerHeight * 2 : window.innerWidth * 2)) + "px"
+            const top = Math.floor(Math.random() * (isInvert ? window.innerHeight * 3 : window.innerHeight * 2)) + "px"
             planet.style.left = left
             planet.style.top = top
             const distance = Math.random() * 0.5 + 0.5

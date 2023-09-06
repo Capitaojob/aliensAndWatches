@@ -1,3 +1,5 @@
+import { storeUserAlienMatrixInLocalStorage } from "./index.js"
+
 export const playlistMatrix = [
     ["Heatblast", "Four Arms", "XLR8", "Diamondhead", "Upgrade", "Ghostfreak", "Stinkfly", "Grey Matter", "Wildmutt", "Ripjaws"],
     ["Cannonbolt", "Wildvine", "Blitzwolfer", "Snare-oh", "Frankenstrike", "Upchuck", "Ditto", "Eye Guy", "Way Big", "Arctiguana"],
@@ -15,3 +17,16 @@ export const alienColorsMatrix = [
     ["#ba3758", "#8a3418", "#ebd50f", "#19133d", "#9b701b", "#1e1908", "#a2a9d1", "#9e3829", "#879f46", "#ada425"],
     ["#6e6faa", "#ce1a49", "#060606", "#e6c434", "#4da3c1", "#9fd7dd", "#a76846", "#c39f13", "#c2d4c7", "#c3d5c8"],
 ]
+
+export const generateFirstPlaylist = () => {
+    let generatingUserAlienMatrix = []
+    for (let i = 0; i < 10; i++) {
+        let newAlien
+        do {
+            newAlien = playlistMatrix[Math.floor(Math.random() * 5)][Math.floor(Math.random() * 9)]
+        } while (generatingUserAlienMatrix.includes(newAlien))
+        generatingUserAlienMatrix.push(newAlien)
+    }
+    storeUserAlienMatrixInLocalStorage(generatingUserAlienMatrix)
+    return generatingUserAlienMatrix
+}

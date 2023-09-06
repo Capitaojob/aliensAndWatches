@@ -6,16 +6,16 @@
 }
 
 :root {
+    --background-color: #0d0318;
     --space-color: #000;
+    --neon-glow: #07d100;
     --spinner: url("../assets/videos/loading/Spinner-3.3s-200px.gif");
 }
 
 body {
     position: relative;
-    width: 100%;
-    height: 100vh;
-    background-color: #0d0318;
-
+    min-width: 100%;
+    min-height: 100vh;
     background-color: var(--space-color);
 }
 
@@ -24,7 +24,7 @@ main {
     width: 100%;
     height: 100%;
 
-    background-color: #0d0318;
+    background-color: var(--space-color);
 
     background-size: 120%;
     background-position: center;
@@ -38,7 +38,7 @@ main {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #000;
+    background-color: var(--space-color);
     transition: 200ms opacity ease;
     background-image: url("../assets/videos/loading/Spinner-3.3s-200px.gif");
     background-position: center;
@@ -46,9 +46,11 @@ main {
 }
 
 .planet-card {
-    position: absolute;
+    backface-visibility: hidden;
+    position: fixed;
     width: 40%;
-    height: 50%;
+    /* height: 50%; */
+    height: auto;
     top: 25%;
     left: 30%;
 
@@ -58,10 +60,10 @@ main {
 
     z-index: 100000;
 
-    background-color: #292636;
-    color: #ddd;
-    border-radius: 30px;
-    padding: 40px 20px;
+    background-color: var(--space-color);
+    border: 5px solid var(--neon-glow);
+    color: var(--neon-glow);
+    padding: 30px 15px;
     box-sizing: border-box;
 
     display: none;
@@ -88,8 +90,8 @@ main {
 .planet-card img {
     padding: 20px;
     box-sizing: border-box;
-    background-color: #000;
-    border-radius: 10px;
+    background-color: var(--space-color);
+    border: 3px solid var(--neon-glow);
     width: 100%;
 }
 
@@ -109,11 +111,13 @@ main {
 
 .planet-card button {
     font-size: 1.5em;
-    color: #ddd;
+    color: var(--neon-glow);
     padding: 10px;
     cursor: pointer;
+    box-sizing: border-box;
 
-    background-color: #2b0f4b;
+    border: 3px solid var(--neon-glow);
+    background-color: var(--space-color);
 }
 
 .planets {
@@ -130,8 +134,13 @@ main {
     -webkit-tap-highlight-color: transparent;
 }
 
+.planet:hover {
+    border: 3px solid var(--neon-glow);
+}
+
 .credits {
-    position: absolute;
+    backface-visibility: hidden;
+    position: fixed;
     bottom: 20px;
     left: 20px;
 }
@@ -142,13 +151,19 @@ main {
 }
 
 @media screen and (max-width: 500px) {
-    .planet img {
+    /* .planet img {
         position: relative;
         width: 50%;
         height: 50%;
+    } */
+
+    .planets {
+        width: 100vh;
+        height: 100vw;
     }
 
     .planet-card {
+        position: fixed;
         width: 80%;
         height: 60%;
         top: 20%;
@@ -181,6 +196,6 @@ main {
         padding: 10px;
         cursor: pointer;
 
-        background-color: #2b0f4b;
+        background-color: var(--background-color);
     }
 }

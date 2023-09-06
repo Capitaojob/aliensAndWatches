@@ -1,7 +1,7 @@
 import { showAlienName } from "./interface.js"
 import { auxiliaryClick, auxiliaryHold, displayClick, displayHold, omnitrixBtn, omnitrixDisplay } from "./omnitrix.js"
 import { handleTouchMove, handleTouchStart } from "./phone-handler.js"
-import { playlistMatrix } from "./playlist.js"
+import { generateFirstPlaylist, playlistMatrix } from "./playlist.js"
 
 const menuArrow = document.querySelector("aside i")
 
@@ -72,6 +72,10 @@ export const storeMasterControlInLocalStorage = () => {
     localStorage.setItem("masterControl", isMasterControl)
 }
 
+export const storeUserAlienMatrixInLocalStorage = (specificMatrix = userAlienMatrix) => {
+    localStorage.setItem("userAlienMatrix", specificMatrix)
+}
+
 // Gets
 const getPlaylist = () => {
     const playlist = localStorage.getItem("playlist")
@@ -88,6 +92,12 @@ const getMasterControl = () => {
     return storedMasterControl !== null ? storedMasterControl : false
 }
 
+const getAvailableAliens = () => {
+    const storedAvailableAliens = localStorage.getItem("userAlienMatrix")
+    return storedAvailableAliens !== null ? storedAvailableAliens : generateFirstPlaylist()
+}
+
+export let userAlienMatrix = getAvailableAliens()
 export let currentPlaylist = getPlaylist()
 export let currentAlienId = getAlienID()
 export let isMasterControl = getMasterControl()

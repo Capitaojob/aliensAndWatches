@@ -8,6 +8,7 @@ const alienSilhouette = document.querySelector(".alien-silhouette")
 export const root = document.querySelector(":root")
 
 let omnitrixTimeoutId = 0
+let processing = false
 let selfDestructId = 0
 let currentSequence = ""
 
@@ -61,10 +62,8 @@ export const displayHold = (e) => {
         let isRight = e.clientX >= window.innerWidth / 2
         if (isRight) {
             turnOmnitrix("right")
-            // updateCurrentSequence("right")
         } else {
             turnOmnitrix("left")
-            // updateCurrentSequence("left")
         }
     }
 }
@@ -86,9 +85,12 @@ const toggleOmnitrixDisplay = () => {
         playAudio("../assets/sounds/alien_choose_initiate.ogg")
         showAlienName()
 
+        omnitrixDisplay.classList.add("processing")
+
         setTimeout(() => {
             omnitrixChangeDisplayState()
             showAlienImage()
+            omnitrixDisplay.classList.remove("processing")
         }, 800)
     }
     omnitrixDisplay.classList.toggle("up")
@@ -172,9 +174,13 @@ const omnitrixTimeOut = () => {
 
 // Animations
 export const turnOmnitrix = (direction) => {
+    if (omnitrixDisplay.classList.contains("processing")) {
+        return
+    }
     randomTurnAudio()
     let rotation = direction == "right" ? "rotate-right" : "rotate-left"
 
+    console.log(direction)
     updateCurrentSequence(direction)
     changeAlien(direction)
 
