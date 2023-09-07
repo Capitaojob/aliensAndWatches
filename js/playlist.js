@@ -1,7 +1,7 @@
 import { storeUserAlienMatrixInLocalStorage } from "./index.js"
 
 export const playlistMatrix = [
-    ["Heatblast", "Four Arms", "XLR8", "Diamondhead", "Upgrade", "Ghostfreak", "Stinkfly", "Grey Matter", "Wildmutt", "Ripjaws"],
+    ["Heatblast", "Wildmutt", "Diamondhead", "XLR8", "Grey Matter", "Four Arms", "Stinkfly", "Ripjaws", "Upgrade", "Ghostfreak"],
     ["Cannonbolt", "Wildvine", "Blitzwolfer", "Snare-oh", "Frankenstrike", "Upchuck", "Ditto", "Eye Guy", "Way Big", "Arctiguana"],
     ["Swampfire", "Echo Echo", "Humungousaur", "Jetray", "Big Chill", "Chromastone", "Brainstorm", "Spidermonkey", "Goop", "Alien X"],
     ["Lodestar", "Rath", "Nanomech", "Murk Upchuck", "Water Hazard", "Terraspin", "NRG", "Armodrillo", "AmpFibian", "Fasttrack"],

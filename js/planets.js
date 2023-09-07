@@ -20,7 +20,7 @@ window.onload = () => {
             const top = Math.floor(Math.random() * (isInvert ? window.innerHeight * 3 : window.innerHeight * 2)) + "px"
             planet.style.left = left
             planet.style.top = top
-            const distance = Math.random() * 0.5 + 0.5
+            const distance = Math.random() * 0.25 + 0.7
             planet.style.filter = `brightness(${distance})`
             planet.style.zIndex = distance * 1000
             // planet.style.transform = `rotate(${Math.floor(Math.random() * 360) + "deg"})`

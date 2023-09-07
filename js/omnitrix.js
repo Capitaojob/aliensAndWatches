@@ -8,7 +8,6 @@ const alienSilhouette = document.querySelector(".alien-silhouette")
 export const root = document.querySelector(":root")
 
 let omnitrixTimeoutId = 0
-let processing = false
 let selfDestructId = 0
 let currentSequence = ""
 
@@ -105,7 +104,7 @@ const omnitrixDetransform = () => {
 
 const omnitrixTransform = () => {
     toggleOmnitrixDisplay()
-    if (!isMasterControl) setOmnitrixTimeout()
+    if (!isMasterControl) setOmnitrixTimeout(60000)
     hideAlienImage()
     updateCurrentSequence("clear")
     playAudio("../assets/sounds/transformation_1.ogg")
@@ -115,6 +114,7 @@ const omnitrixTransform = () => {
 }
 
 const omnitrixReactivate = () => {
+    if (!isMasterControl) clearTimeout(omnitrixTimeoutId)
     playAudio("../assets/sounds/initiate.ogg")
     omnitrixDisplay.classList.remove("inactive")
     omnitrixBtn.classList.remove("inactive")
@@ -123,10 +123,16 @@ const omnitrixReactivate = () => {
 }
 
 // Timeout Logic
-const setOmnitrixTimeout = () => {
+const setOmnitrixTimeout = (time) => {
     omnitrixTimeoutId = setTimeout(() => {
         omnitrixDetransform()
-    }, 60000)
+    }, time)
+}
+
+const setOmnitrixReactivateTimeout = (time) => {
+    omnitrixTimeoutId = setTimeout(() => {
+        omnitrixReactivate()
+    }, time)
 }
 
 const setOrRemoveSelfDestructTimeout = () => {
@@ -162,6 +168,7 @@ const omnitrixTimeOut = () => {
             omnitrixBtn.classList.add("inactive")
             omnitrixDisplay.classList.remove("processing")
             transformOmnitrix()
+            setOmnitrixReactivateTimeout(30000)
         }, 3000)
     } else {
         omnitrixDisplay.classList.add("inactive")
@@ -180,7 +187,6 @@ export const turnOmnitrix = (direction) => {
     randomTurnAudio()
     let rotation = direction == "right" ? "rotate-right" : "rotate-left"
 
-    console.log(direction)
     updateCurrentSequence(direction)
     changeAlien(direction)
 
@@ -248,7 +254,8 @@ const resetSequence = () => {
 //Alien Change
 const showAlienImage = () => {
     let alienImageName = parseInt(currentAlienId) + 1 + currentPlaylist * 10
-    alienSilhouette.style.backgroundImage = alienImageName == 1 ? `url("../assets/images/aliens/${alienImageName}.png")` : "none"
+    // alienSilhouette.style.backgroundImage = alienImageName == 1 ? `url("../assets/images/aliens/${alienImageName}.png")` : "none"
+    alienSilhouette.style.backgroundImage = `url("../assets/images/aliens/${alienImageName}.png")`
 }
 
 const hideAlienImage = () => {
