@@ -16,14 +16,17 @@
     </head>
     <body>
         <main>
-            <section class="loading"></section>
-            <div class="planet-card">
+            <aside class="navigation">
+                <!-- <a href="../index.html"><i class="fa-solid fa-chevron-left"></i></a> -->
+                <i class="fa-solid fa-chevron-left" onclick="{history.back()}"></i>
+            </aside>
+            <section class="planet-card">
                 <i class="fa-solid fa-x"></i>
                 <img src="" alt="Current selected planet" />
                 <h1 id="name">Planet</h1>
                 <h3 id="description">Planet description</h3>
                 <button id="travel">Travel to planet</button>
-            </div>
+            </section>
             <section class="planets">
                 <div class="planet">
                     <img
@@ -88,6 +91,7 @@
             <div class="credits">
                 <a href="https://deep-fold.itch.io/pixel-planet-generator" target="_blank">Planet Generator Credits</a>
             </div>
+            <section class="loading"></section>
         </main>
     </body>
 </html>

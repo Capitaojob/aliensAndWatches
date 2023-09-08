@@ -34,11 +34,19 @@ menuArrow.addEventListener("click", () => {
 })
 
 // Local Storage Variable Manipulations
-export const changePlaylist = () => {
-    if (currentPlaylist < playlistMatrix.length - 1) {
-        currentPlaylist++
+export const changePlaylist = (direction) => {
+    if (direction == "forwards") {
+        if (currentPlaylist < playlistMatrix.length - 1) {
+            currentPlaylist++
+        } else {
+            currentPlaylist = 0
+        }
     } else {
-        currentPlaylist = 0
+        if (currentPlaylist > 0) {
+            currentPlaylist--
+        } else {
+            currentPlaylist = playlistMatrix.length - 1
+        }
     }
 }
 
@@ -89,7 +97,11 @@ const getAlienID = () => {
 
 const getMasterControl = () => {
     const storedMasterControl = localStorage.getItem("masterControl")
-    return storedMasterControl !== null ? storedMasterControl : false
+    if (storedMasterControl !== null) {
+        return storedMasterControl === "true" ? true : false
+    } else {
+        return false
+    }
 }
 
 const getAvailableAliens = () => {

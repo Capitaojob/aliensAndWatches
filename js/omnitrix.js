@@ -27,7 +27,7 @@ export const auxiliaryClick = () => {
 export const auxiliaryHold = (e) => {
     e.preventDefault()
 
-    changePlaylist()
+    changePlaylist("forwards")
     if (omnitrixDisplay.classList.contains("up")) {
         showAlienName()
         showAlienImage()
