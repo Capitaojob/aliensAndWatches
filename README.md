@@ -1,40 +1,40 @@
 # Omnitrix App
 
-![Omnitrix](images/omnitrix-icon.png)
+![Omnitrix](assets/images/omnitrix-icon.png)
 
 ## Description
 
-The Omnitrix App is a web application that simulates the functionality of Ben 10's Omnitrix device. Users can click on the Omnitrix to transform into different alien forms, change playlists, and enjoy sound effects.
+The Omnitrix App is a web application that emulates the functionality of Ben 10's Omnitrix device. With this app, users can transform into various alien forms, switch playlists, explore planets and enjoy immersive sound effects.
 
 ## Features
 
--   **Transformations:** Click the Omnitrix to transform into different aliens.
--   **Playlist Switch:** Right-click the button bellow the display to switch between playlists.
--   **Sound Effects:** Experience audio effects while interacting with the Omnitrix.
--   **Alien Names:** See the names of the selected alien.
--   **Timeout Mechanism:** The Omnitrix automatically detransforms after a certain time.
+-   **Alien Transformations:** Click the Omnitrix display to undergo alien transformations.
+-   **Playlist Switch:** Right-click the button below the display to effortlessly switch between playlists.
+-   **Soundscapes:** Immerse yourself in dynamic sound effects that enhance your Omnitrix experience.
+-   **Alien Identification:** Get images and names of the selected alien.
+-   **Automatic Detransformation:** The Omnitrix detransforms and reactivates after a predefined time.
 
 ## Usage
 
-1. **Transform into Aliens:**
+### 1. Alien Transformations
 
-    - Click the auxiliary button (button bellow the display) to activate the Omnitrix.
-    - Right-click on the Omnitrix to switch aliens.
-    - Right-click the auxiliary button to switch playlists.
-    - Click on the Omnitrix to transform into different aliens.
+-   Click the auxiliary button (located below the display) to activate the Omnitrix interface.
+-   Right-click on the Omnitrix or swipe left/right (mobile) to cycle through different alien forms.
+-   Right-click the auxiliary button or swipe up/down (mobile) to switch playlists.
+-   Click on the Omnitrix display to transform into the selected alien.
 
-2. **Sound Effects:**
+### 2. Automatic Detransformation and Reactivation
 
-    - Enjoy sound effects during transformations and playlist changes.
+-   The Omnitrix will automatically return to its default state after a set duration.
 
-3. **Timeout:**
+### 3. Discover Planets from the Show
 
-    - The Omnitrix will automatically detransform after a certain time.
+-   Via the menu, you can find planets from the show by exploring the randomly generated space map
 
 ## Installation
 
-1. Clone this repository to your local machine:
+Clone this repository to your local machine:
 
-    ```bash
-    git clone https://github.com/your-username/omnitrix-app.git
-    ```
+```bash
+git clone https://github.com/capitaojob/aliensAndWatches.git
+```
