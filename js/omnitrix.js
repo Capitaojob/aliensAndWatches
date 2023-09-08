@@ -1,6 +1,6 @@
 import { playAudio, randomTurnAudio } from "./audio.js"
 import { changeBackColor, hideAlienName, showAlienName, showAuxiliaryText } from "./interface.js"
-import { changeAlien, changePlaylist, currentAlienId, currentPlaylist, isMasterControl, storeMasterControlInLocalStorage } from "./index.js"
+import { changeAlien, changeCurrentPlaylist, currentAlienId, currentPlaylist, isMasterControl, storeMasterControlInLocalStorage } from "./index.js"
 
 export const omnitrixDisplay = document.querySelector("#omnitrix .frame")
 export const omnitrixBtn = document.querySelector("#omnitrix .green-btn")
@@ -27,14 +27,7 @@ export const auxiliaryClick = () => {
 export const auxiliaryHold = (e) => {
     e.preventDefault()
 
-    changePlaylist("forwards")
-    if (omnitrixDisplay.classList.contains("up")) {
-        showAlienName()
-        showAlienImage()
-    }
-    showAuxiliaryText("playlist")
-
-    playAudio("../assets/sounds/noise.ogg")
+    changeAndShowPlaylist("forwards")
 }
 
 export const displayClick = () => {
@@ -251,7 +244,7 @@ const resetSequence = () => {
     currentSequence = ""
 }
 
-//Alien Change
+//Alien and Playlist Change
 const showAlienImage = () => {
     let alienImageName = parseInt(currentAlienId) + 1 + currentPlaylist * 10
     // alienSilhouette.style.backgroundImage = alienImageName == 1 ? `url("../assets/images/aliens/${alienImageName}.png")` : "none"
@@ -260,4 +253,16 @@ const showAlienImage = () => {
 
 const hideAlienImage = () => {
     alienSilhouette.style.backgroundImage = "none"
+}
+
+export const changeAndShowPlaylist = (direction) => {
+    changeCurrentPlaylist(direction)
+
+    if (omnitrixDisplay.classList.contains("up")) {
+        showAlienName()
+        showAlienImage()
+    }
+    showAuxiliaryText("playlist")
+
+    playAudio("../assets/sounds/noise.ogg")
 }

@@ -34,7 +34,7 @@ menuArrow.addEventListener("click", () => {
 })
 
 // Local Storage Variable Manipulations
-export const changePlaylist = (direction) => {
+export const changeCurrentPlaylist = (direction) => {
     if (direction == "forwards") {
         if (currentPlaylist < playlistMatrix.length - 1) {
             currentPlaylist++

@@ -45,3 +45,36 @@ const planetClickEvent = (e) => {
     planetCard.querySelector("h1").innerHTML = e.target.dataset.name
     planetCard.querySelector("h3").innerHTML = e.target.alt
 }
+
+const setRandomFavicon = () => {
+    // Array of image URLs in your directory
+    const imageUrls = [
+        "../assets/videos/arburia.gif",
+        "../assets/videos/galvan-prime.gif",
+        "../assets/videos/lepidopterra.gif",
+        "../assets/videos/mikd'lty.gif",
+        "../assets/videos/piscciss.gif",
+        "../assets/videos/pyros.gif",
+        "../assets/videos/petropia.png",
+        "../assets/videos/peptosxii.gif",
+    ]
+
+    // Set a random image as the favicon
+    const randomIndex = Math.floor(Math.random() * imageUrls.length)
+    const selectedImageUrl = imageUrls[randomIndex]
+
+    const link = document.createElement("link")
+    link.rel = "icon"
+    link.type = "image/x-icon"
+    link.href = selectedImageUrl
+
+    // Remove any existing favicon
+    const existingFavicon = document.querySelector('link[rel="icon"]')
+    if (existingFavicon) {
+        document.head.removeChild(existingFavicon)
+    }
+
+    document.head.appendChild(link)
+}
+
+setRandomFavicon()

@@ -1,5 +1,4 @@
-import { changePlaylist } from "./index.js"
-import { omnitrixDisplay, turnOmnitrix } from "./omnitrix.js"
+import { changeAndShowPlaylist, omnitrixDisplay, turnOmnitrix } from "./omnitrix.js"
 
 document.addEventListener("touchstart", handleTouchStart, false)
 document.addEventListener("touchmove", handleTouchMove, false)
@@ -39,12 +38,14 @@ export function handleTouchMove(event) {
         turning = false
     }, 500)
 
+    let direction
+
     if (Math.abs(yDiff) < Math.abs(xDiff)) {
-        const direction = xDiff > 0 ? "left" : "right"
+        direction = xDiff > 0 ? "left" : "right"
         turnOmnitrix(direction)
     } else {
-        const direction = yDiff > 0 ? "forwards" : "backwards"
-        changePlaylist(direction)
+        direction = yDiff > 0 ? "forwards" : "backwards"
+        changeAndShowPlaylist(direction)
     }
 
     xDown = event.touches[0].clientX
