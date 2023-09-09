@@ -1,7 +1,7 @@
 import { changeAndShowPlaylist, omnitrixDisplay, turnOmnitrix } from "./omnitrix.js"
 
-document.addEventListener("touchstart", handleTouchStart, false)
-document.addEventListener("touchmove", handleTouchMove, false)
+omnitrixDisplay.addEventListener("touchstart", handleTouchStart, false)
+omnitrixDisplay.addEventListener("touchmove", handleTouchMove, false)
 
 var xDown = null
 var yDown = null
