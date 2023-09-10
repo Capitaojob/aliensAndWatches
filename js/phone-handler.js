@@ -1,7 +1,10 @@
 import { changeAndShowPlaylist, omnitrixDisplay, turnOmnitrix } from "./omnitrix.js"
 
-omnitrixDisplay.addEventListener("touchstart", handleTouchStart, false)
-omnitrixDisplay.addEventListener("touchmove", handleTouchMove, false)
+omnitrixDisplay.addEventListener("touchstart", handleTouchStart)
+omnitrixDisplay.addEventListener("touchmove", (e) => {
+    e.preventDefault()
+    handleTouchMove(e)
+})
 
 var xDown = null
 var yDown = null
@@ -17,7 +20,7 @@ export function handleTouchStart(e) {
     yDown = firstTouch.clientY
 }
 
-export function handleTouchMove(event) {
+export function handleTouchMove(e) {
     if (turning || !omnitrixDisplay.classList.contains("up")) {
         return // Early return if not allowed to turn or not in "up" state
     }
@@ -26,8 +29,8 @@ export function handleTouchMove(event) {
         return // Early return if touchstart data is missing
     }
 
-    const xUp = event.touches[0].clientX
-    const yUp = event.touches[0].clientY
+    const xUp = e.touches[0].clientX
+    const yUp = e.touches[0].clientY
 
     const xDiff = xDown - xUp
     const yDiff = yDown - yUp
@@ -48,6 +51,6 @@ export function handleTouchMove(event) {
         changeAndShowPlaylist(direction)
     }
 
-    xDown = event.touches[0].clientX
-    yDown = event.touches[0].clientY
+    xDown = e.touches[0].clientX
+    yDown = e.touches[0].clientY
 }

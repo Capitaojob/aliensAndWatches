@@ -1,5 +1,5 @@
 import { showAlienName } from "./interface.js"
-import { auxiliaryClick, auxiliaryHold, displayClick, displayHold, omnitrixBtn, omnitrixDisplay } from "./omnitrix.js"
+import { auxiliaryClick, auxiliaryHold, displayClick, displayHold, omnitrix, omnitrixBtn, omnitrixDisplay, root } from "./omnitrix.js"
 import { handleTouchMove, handleTouchStart } from "./phone-handler.js"
 import { generateFirstPlaylist, playlistMatrix } from "./playlist.js"
 
@@ -109,7 +109,25 @@ const getAvailableAliens = () => {
     return storedAvailableAliens !== null ? storedAvailableAliens : generateFirstPlaylist()
 }
 
+const preloadAssets = async () => {
+    const frameClasses = ["inactive-frame", "transformed-frame", "active-frame"]
+
+    async function loadFrames(index) {
+        if (index < frameClasses.length) {
+            if (index - 1 >= 0) {
+                omnitrixDisplay.classList.remove(frameClasses[index - 1])
+            }
+            omnitrixDisplay.classList.add(frameClasses[index])
+            await new Promise((resolve) => setTimeout(resolve, 10)) // Wait for 100ms
+            loadFrames(index + 1)
+        }
+    }
+
+    await loadFrames(0)
+}
+
 export let userAlienMatrix = getAvailableAliens()
 export let currentPlaylist = getPlaylist()
 export let currentAlienId = getAlienID()
 export let isMasterControl = getMasterControl()
+preloadAssets()

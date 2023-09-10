@@ -2,6 +2,7 @@ import { playAudio, randomTurnAudio } from "./audio.js"
 import { changeBackColor, hideAlienName, showAlienName, showAuxiliaryText } from "./interface.js"
 import { changeAlien, changeCurrentPlaylist, currentAlienId, currentPlaylist, isMasterControl, storeMasterControlInLocalStorage } from "./index.js"
 
+export const omnitrix = document.querySelector("#omnitrix")
 export const omnitrixDisplay = document.querySelector("#omnitrix .frame")
 export const omnitrixBtn = document.querySelector("#omnitrix .green-btn")
 const alienSilhouette = document.querySelector(".alien-silhouette")
@@ -71,7 +72,7 @@ const isOmnitrixDisplayUp = () => {
 const toggleOmnitrixDisplay = () => {
     if (omnitrixDisplay.classList.contains("up")) {
         omnitrixDisplay.style.transform = "scale(1)"
-        omnitrixChangeDisplayState(false)
+        omnitrixDisplayChangeInnerFrameImage()
     } else {
         omnitrixDisplay.style.transform = "scale(1.1)"
         playAudio("../assets/sounds/alien_choose_initiate.ogg")
@@ -80,7 +81,7 @@ const toggleOmnitrixDisplay = () => {
         omnitrixDisplay.classList.add("processing")
 
         setTimeout(() => {
-            omnitrixChangeDisplayState()
+            omnitrixDisplayChangeInnerFrameImage()
             showAlienImage()
             omnitrixDisplay.classList.remove("processing")
         }, 800)
@@ -194,23 +195,24 @@ export const turnOmnitrix = (direction) => {
 
 const transformOmnitrix = () => {
     if (omnitrixDisplay.classList.contains("inactive")) {
-        root.style.setProperty("--og-frame", 'url("../assets/images/new-frame-red.png")')
-        root.style.setProperty("--base", 'url("../assets/images/base.png")')
+        omnitrixDisplay.classList.toggle("transformed-frame")
+        omnitrixDisplay.classList.toggle("inactive-frame")
+        omnitrix.classList.toggle("no-base")
         omnitrixBtn.style.display = "block"
         changeBackColor(false)
     } else if (omnitrixDisplay.classList.contains("active")) {
-        root.style.setProperty("--og-frame", 'url("../assets/images/new-frame.png")')
+        omnitrixDisplay.classList.toggle("inactive-frame")
     } else {
-        root.style.setProperty("--og-frame", 'url("../assets/images/frame.png")')
-        root.style.setProperty("--base", "none")
+        omnitrixDisplay.classList.toggle("transformed-frame")
+        omnitrix.classList.toggle("no-base")
         omnitrixBtn.style.display = "none"
         changeBackColor(true)
     }
 }
 
-const omnitrixChangeDisplayState = (waitingForInput = true) => {
+const omnitrixDisplayChangeInnerFrameImage = () => {
     const innerFrame = document.querySelector("#omnitrix .inner-frames")
-    innerFrame.style.backgroundImage = `url("../assets/images/frames${waitingForInput == true ? "-selection" : ""}.png")`
+    innerFrame.classList.toggle("inner-frame-selection")
 }
 
 // Omnitrix Sequence Commands
