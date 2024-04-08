@@ -1,6 +1,6 @@
 # Omnitrix App
 
-![Omnitrix](assets/images/omnitrix-icon.png)
+[![Omnitrix](assets/images/omnitrix-icon.png)](https://delightful-zabaione-ec77c5.netlify.app/)
 
 ## Description
 
@@ -38,3 +38,7 @@ Clone this repository to your local machine:
 ```bash
 git clone https://github.com/capitaojob/aliensAndWatches.git
 ```
+
+## Live App
+
+https://delightful-zabaione-ec77c5.netlify.app
